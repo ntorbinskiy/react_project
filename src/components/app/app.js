@@ -11,10 +11,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [{ name: "John C.", salary: 800, id: 1 }],
+      data: [
+        { name: "John C.", salary: 800, increase: false, rise: false, id: 1 },
+      ],
     };
   }
-
+  //removeEmployee
   deleteItem = (id) => {
     this.setState(({ data }) => {
       console.log(id);
@@ -23,12 +25,14 @@ class App extends Component {
       };
     });
   };
-  addUser = (name, salary) => {
+  //newEmployee
+  addUser = (name, salary, increase, rise) => {
     const id = nextId();
     console.log(id);
     const NewUser = {
       name,
       salary,
+      increase,
       id,
     };
     this.setState(({ data }) => {
@@ -38,17 +42,43 @@ class App extends Component {
       };
     });
   };
+
+  onToggleIncrease = (id) => {
+    this.setState(({ data }) => ({
+      data: data.map((item) => {
+        if (item.id === id) {
+          return {...item, increase:!item.increase};
+        }
+        return item;
+      }),
+    }));
+  };
+  onToggleRise = (id) => {
+    this.setState(({ data }) => ({
+      data: data.map((item) => {
+        if (item.id === id) {
+          return {...item, rise:!item.rise};
+        }
+        return item;
+      }),
+    }));
+  };
   render() {
     const { data } = this.state;
     return (
       <div className="app">
-        <AppInfo data={data}/>
+        <AppInfo data={data} />
 
         <div className="search-panel">
           <SearchPanel />
           <AppFilter />
         </div>
-        <EmployersList data={data} onDelete={this.deleteItem} />
+        <EmployersList
+          data={data}
+          onDelete={this.deleteItem}
+          onToggleIncrease={this.onToggleIncrease}
+          onToggleRise={this.onToggleRise}
+        />
         <EmployeesAddForm addUser={this.addUser} />
       </div>
     );
