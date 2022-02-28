@@ -1,22 +1,24 @@
-import './app-filter.css';
+import "./app-filter.css";
 
-const AppFilter = () => {
-    return(
-        <div className="btn-group">
-            <button className="btn btn-light"
-                    type="button">
-                        Все сотрудники
-            </button>
-            <button className="btn btn-outline-light"
-                    type="button">
-                        На повышение
-            </button>
-            <button className="btn btn-outline-light"
-                    type="button">
-                        З/П больше 1000$
-            </button>
-        </div>
-    );
-}
+const AppFilter = ({FilterByRise,FilterByRiseBool}) => {
+    const def = "btn btn-outline-light";
+    let neW= def.slice(4,12);
+    console.log(neW);
+  return (
+    <div className="btn-group">
+      <button className={FilterByRise ? def : neW} type="button">
+        Все сотрудники
+      </button>
+      <button className={FilterByRise ? def : neW}
+      type="button"
+      onClick={FilterByRise} >
+        На повышение
+      </button>
+      <button className={FilterByRise ? def : neW} type="button">
+        З/П больше 1000$
+      </button>
+    </div>
+  );
+};
 
 export default AppFilter;
