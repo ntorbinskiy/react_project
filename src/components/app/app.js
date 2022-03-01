@@ -13,11 +13,11 @@ class App extends Component {
     this.state = {
       data: [
         { name: "John C.", salary: 800, increase: false, rise: false, id: 1 },
-        { name: "Da C.", salary: 800, increase: true, rise: false, id: 2 },
-        { name: "Alex C.", salary: 800, increase: true, rise: false, id: 3 },
+        { name: "Da C.", salary: 800, increase: false, rise: false, id: 2 },
+        { name: "Alex C.", salary: 800, increase: false, rise: false, id: 3 },
       ],
       term: "",
-      FilteredByRise:false
+      filter:"all"
     };
   }
   //removeEmployee
@@ -78,26 +78,28 @@ class App extends Component {
       return item.name.indexOf(term) > -1;
     });
   };
-  FilterByDef = ({data}) => {
-    this.setState({
-      data
-    })
-  }
-  FilterByRise = () => {
-    this.setState(({data}) => ({
-        data:data.filter(item => item.increase),
-        FilteredByRise:true
-    }))
-  }
   onUpdateSearch = (term) => {
     this.setState({ term });
   };
+filterPost = (items,filter) => {
+  switch (filter) {
+    case 'rise':
+      return items.filter(item => item.rise);
+    case 'MoreThen1000' :
+      return items.filter(item => item.salary>1000);
+      default:
+        return items;
+  }
+}
 
+onFilterSelect = (filter) => {
+this.setState({filter});
+}
   render() {
-    const { data, term ,FilteredByRise} = this.state;
+    const { data, term,filter} = this.state;
     const employees = data.length;
     const payRise = data.filter((item) => item.increase).length;
-    const visibleData = this.searhEmp(data, term);
+    const visibleData = this.filterPost(this.searhEmp(data, term),filter);
     
     
 
@@ -107,9 +109,8 @@ class App extends Component {
 
         <div className="search-panel">
           <SearchPanel onUpdateSearch={this.onUpdateSearch} />
-          <AppFilter 
-          FilterByRise= {this.FilterByRise}
-          FilterByRiseBool={FilteredByRise}/>
+          <AppFilter filter={filter}
+                    onFilterSelect={this.onFilterSelect} />
         </div>
         <EmployersList
           data={visibleData}
