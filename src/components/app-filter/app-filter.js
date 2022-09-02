@@ -9,9 +9,9 @@ const AppFilter = ({ filter, onFilterSelect }) => {
 
   const buttons = buttonsData.map(({ name, label }) => {
     const active = filter === name;
-    const clazz = active ? "btn-light" : "btn btn-outline-light";
+    const classs = active ? "btn-light" : "btn-outline-light";
     return (
-      <button className={`btn ${clazz}`} 
+      <button className={`btn ${classs}`} 
       type="button" 
       key={name}
       onClick={()=> onFilterSelect(name)}>
