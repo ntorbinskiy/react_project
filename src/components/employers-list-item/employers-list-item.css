@@ -11,15 +11,16 @@
     line-height: 35px;
     font-size: 20px;
     cursor: pointer;
-    min-width: 550px;
+    width: 550px;
 }
 
-.list-group-item input {
+.list-group-item  {
     line-height: 35px;
     font-size: 20px;
     text-align: center;
     border: 0;
 }
+
 
 .list-group-item button {
     width: 35px;
@@ -62,4 +63,8 @@
 .list-group-item.increase .btn-star {
     color: #aeaeae;
 }
-  
+@media (max-width: 767px) {
+    .list-group-item {
+        width: 100%;
+    }
+}
